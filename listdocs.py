@@ -21,5 +21,9 @@ while command != 'q':
     print 's = something'
     command = raw_input('Command: ')
     print '\n'
-    if 'g':
+    if command == 'g':
         get_list()
+    elif command == 'q':
+        break
+    else:
+        print "invalid command"
