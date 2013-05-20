@@ -18,7 +18,6 @@ while command != 'q':
     print 'Commands:'
     print 'q = quit'
     print 'g = get'
-    print 's = something'
     command = raw_input('Command: ')
     print '\n'
     if command == 'g':
