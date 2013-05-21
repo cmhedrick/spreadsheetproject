@@ -14,12 +14,11 @@ def get_list():
     
 command = ''
 while command != 'q':
-    print '\n'
-    print 'Commands:'
+    print '\nCommands:'
     print 'q = quit'
     print 'g = get'
     command = raw_input('Command: ')
-    print '\n'
+    print '------------------------'
     if command == 'g':
         get_list()
     elif command == 'q':
