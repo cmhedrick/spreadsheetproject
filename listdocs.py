@@ -19,9 +19,22 @@ def get_list():
         print document_entry.title.text
 
 def get_spreadsheet_ids():
+    spread_needs = {}
+    spread_keys = []
+    spread_ids = []
+    group = []
     for spreadsheet in spreadsheet_feed.entry:
-        print spreadsheet.id.text.rsplit('/', 1)[1]
-    
+        spread_keys.append(spreadsheet.id.text.rsplit('/', 1)[1])
+    for i in range(len(spreadsheet_feed.entry)):
+        curkey = spread_keys[i]
+        worksheet_feed = spreadclient.GetWorksheetsFeed(curkey)
+        for worksheet in worksheet_feed.entry:
+            group.append(worksheet.id.text.rsplit('/', 1)[1])
+        spread_ids.append(group)
+        group = []
+        spread_needs[spread_keys[i]] = spread_ids[i]
+    print spread_needs
+
 command = ''
 while command != 'q':
     print '\nCommands:'
