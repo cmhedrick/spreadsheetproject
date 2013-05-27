@@ -35,18 +35,29 @@ def get_spreadsheet_ids():
         spread_needs[spread_keys[i]] = spread_ids[i]
     print spread_needs
 
+def sheet_select():
+    feed = spreadclient.GetListFeed(spread_code, worksheet_id)
+    for row in feed.entry:
+        print "%s| %s\n" % (row.title.text, row.content.text)
+
 command = ''
 while command != 'q':
     print '\nCommands:'
     print 'q = quit'
     print 'g = get'
     print 's = spreadsheet ids'
+    print 'select [spreadsheet id] [worksheet id] = read worksheet'
     command = raw_input('Command: ')
     print '------------------------'
     if command == 'g':
         get_list()
     elif command == 's':
         get_spreadsheet_ids()
+    elif 'select' in command.split():
+        selected = command.split()
+        spread_code = selected[1]
+        worksheet_id = selected[2]
+        sheet_select()
     elif command == 'q':
         break
     else:
