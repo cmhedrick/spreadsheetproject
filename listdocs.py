@@ -39,7 +39,7 @@ def get_spreadsheet_ids():
         spread_list.append(spreadsheet)
     for i in range(len(spread_list)):
         for key, value in spread_needs.items():
-            out.append(' ' + str(key) + str(value))
+            out.append(' ' + str(key) + ' ' + str(value))
         print spread_list[i].title.text + out[i]
 
 def sheet_select():
