@@ -23,6 +23,7 @@ def get_spreadsheet_ids():
     spread_keys = []
     spread_ids = []
     group = []
+    out = []
     for spreadsheet in spreadsheet_feed.entry:
         spread_keys.append(spreadsheet.id.text.rsplit('/', 1)[1])
     for i in range(len(spreadsheet_feed.entry)):
@@ -33,7 +34,13 @@ def get_spreadsheet_ids():
         spread_ids.append(group)
         group = []
         spread_needs[spread_keys[i]] = spread_ids[i]
-    print spread_needs
+    spread_list = []
+    for spreadsheet in spreadsheet_feed.entry:
+        spread_list.append(spreadsheet)
+    for i in range(len(spread_list)):
+        for key, value in spread_needs.items():
+            out.append(' ' + str(key) + str(value))
+        print spread_list[i].title.text + out[i]
 
 def sheet_select():
     feed = spreadclient.GetListFeed(spread_code, worksheet_id)
