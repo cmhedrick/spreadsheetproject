@@ -19,7 +19,6 @@ def get_list():
         print document_entry.title.text
 
 def get_spreadsheet_ids():
-    spread_needs = {}
     spread_keys = []
     spread_ids = []
     group = []
@@ -33,14 +32,14 @@ def get_spreadsheet_ids():
             group.append(worksheet.id.text.rsplit('/', 1)[1])
         spread_ids.append(group)
         group = []
-        spread_needs[spread_keys[i]] = spread_ids[i]
-    spread_list = []
-    for spreadsheet in spreadsheet_feed.entry:
-        spread_list.append(spreadsheet)
-    for i in range(len(spread_list)):
-        for key, value in spread_needs.items():
-            out.append(' ' + str(key) + ' ' + str(value))
-        print spread_list[i].title.text + out[i]
+        spread_needs = zip(spread_keys, spread_ids)
+    for key, value in spread_needs:
+        out.append(' ' + str(key) + ' ' + str(value))
+    print_spreadsheets_ids(out)
+
+def print_spreadsheets_ids(out):
+    for i in range(len(spreadsheet_feed.entry)):
+        print spreadsheet_feed.entry[i].title.text + out[i]
 
 def sheet_select():
     feed = spreadclient.GetListFeed(spread_code, worksheet_id)
