@@ -1,7 +1,6 @@
 import gdata.docs.service as docserv
 import gdata.spreadsheet.service as spreadserv
 import getpass
-import re
 
 #username = raw_input('username: ')
 username = 'christopher.m.hedrick'
@@ -44,7 +43,7 @@ def print_spreadsheets_ids(processed_ids):
         print spreadsheet_feed.entry[i].title.text + processed_ids[i]
 
 def sheet_select():
-    feed = spreadclient.GetListFeed(spread_code, worksheet_id)
+    feed = spreadclient.GetListFeed(set_spreadid, set_workid)
     for row in feed.entry:
         print "%s| %s\n" % (row.title.text, row.content.text)
 
@@ -81,8 +80,8 @@ while command != 'q':
     print 'q = quit'
     print 'g = get'
     print 's = spreadsheet ids'
-    print 'select [spreadsheet id] [worksheet id] = read worksheet'
     print 'set [spreadsheet id] [worksheet id] = set a worksheet to work on'
+    print 'select = read worksheet'
     print 'insert = insert row'
     command = raw_input('Command: ')
     print '------------------------'
