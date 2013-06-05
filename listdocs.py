@@ -42,7 +42,7 @@ def print_spreadsheets_ids(processed_ids):
     for i in range(len(spreadsheet_feed.entry)):
         print spreadsheet_feed.entry[i].title.text + processed_ids[i]
 
-def sheet_select():
+def sheet_read():
     feed = spreadclient.GetListFeed(set_spreadid, set_workid)
     for row in feed.entry:
         print "%s| %s\n" % (row.title.text, row.content.text)
@@ -81,7 +81,7 @@ while command != 'q':
     print 'g = get'
     print 's = spreadsheet ids'
     print 'set [spreadsheet id] [worksheet id] = set a worksheet to work on'
-    print 'select = read worksheet'
+    print 'read = read worksheet'
     print 'insert = insert row'
     command = raw_input('Command: ')
     print '------------------------'
@@ -92,11 +92,8 @@ while command != 'q':
         print_spreadsheets_ids(processed_ids)
     elif command == 't':
         test()
-    elif 'select' in command.split():
-        selected = command.split()
-        spread_code = selected[1]
-        worksheet_id = selected[2]
-        sheet_select()
+    elif 'read' in command.split():
+        sheet_read()
     elif 'insert' in command:
         cols = make_columns()
         row = enter_columns(cols)
