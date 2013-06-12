@@ -1,6 +1,7 @@
 import gdata.docs.service as docserv
 import gdata.spreadsheet.service as spreadserv
 import getpass
+from tabulate import tabulate
 
 #username = raw_input('username: ')
 username = 'christopher.m.hedrick'
@@ -44,8 +45,15 @@ def print_spreadsheets_ids(processed_ids):
 
 def sheet_read():
     feed = spreadclient.GetListFeed(set_spreadid, set_workid)
+    keys = feed.entry[0].custom.keys()
+    row_sub_list = []
+    row_list = []
     for row in feed.entry:
-        print "%s| %s\n" % (row.title.text, row.content.text)
+        row_sub_list = []
+        for key in row.custom.keys():
+	    row_sub_list.append(row.custom[key].text)
+        row_list.append(row_sub_list)
+    print tabulate(row_list, headers= keys)         
 
 def set_spreadsheet(command):
     working_sheet = command.split()
