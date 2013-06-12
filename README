@@ -1,0 +1,10 @@
+A command line app that allows the user to interact with Google Spreadsheets by:
+    -Providing a visual of all existing spreadsheets
+    -Reading individual spreadsheets
+    -Inserting new rows of data
+    -Updating rows of data
+    -And deleting rows of data
+
+To be able to use please remember to pip install the requirements.
+
+pip install -r requirements.txt
