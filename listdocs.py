@@ -79,6 +79,11 @@ def enter_columns(cols):
 def insert_row(row):
     spreadclient.InsertRow(row, set_spreadid, set_workid)
 
+def delete_row(command):
+    feed = spreadclient.GetListFeed(set_spreadid, set_workid)
+    row_to_del = int(command.split()[1]) - 1
+    spreadclient.DeleteRow(feed.entry[row_to_del])
+    
 def test():
     import pdb; pdb.set_trace()
 
@@ -91,6 +96,7 @@ while command != 'q':
     print 'set [spreadsheet id] [worksheet id] = set a worksheet to work on'
     print 'read = read worksheet'
     print 'insert = insert row'
+    print 'delete [row #] = deletes specified row'
     command = raw_input('Command: ')
     print '------------------------'
     if command == 'g':
@@ -106,9 +112,10 @@ while command != 'q':
         cols = make_columns()
         row = enter_columns(cols)
         insert_row(row)
-
     elif 'set' in command:
         set_spreadsheet(command)
+    elif 'delete' in command:
+        delete_row(command)
     elif command == 'q':
         break
     else:
