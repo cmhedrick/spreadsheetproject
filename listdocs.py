@@ -84,6 +84,13 @@ def delete_row(command):
     row_to_del = int(command.split()[1]) - 1
     spreadclient.DeleteRow(feed.entry[row_to_del])
     
+def update_row(command):
+    feed = spreadclient.GetListFeed(set_spreadid, set_workid)
+    old_row = int(command.split()[1]) - 1
+    cols = make_columns()
+    new_row = enter_columns(cols)
+    spreadclient.UpdateRow(feed.entry[old_row], new_row)
+
 def test():
     import pdb; pdb.set_trace()
 
@@ -96,6 +103,7 @@ while command != 'q':
     print 'set [spreadsheet id] [worksheet id] = set a worksheet to work on'
     print 'read = read worksheet'
     print 'insert = insert row'
+    print 'update [row #] = update specified row'
     print 'delete [row #] = deletes specified row'
     command = raw_input('Command: ')
     print '------------------------'
@@ -116,6 +124,8 @@ while command != 'q':
         set_spreadsheet(command)
     elif 'delete' in command:
         delete_row(command)
+    elif 'update' in command:
+        update_row(command)
     elif command == 'q':
         break
     else:
