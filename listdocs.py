@@ -3,8 +3,7 @@ import gdata.spreadsheet.service as spreadserv
 import getpass
 from tabulate import tabulate
 
-#username = raw_input('username: ')
-username = 'christopher.m.hedrick'
+username = raw_input('username: ')
 password = getpass.getpass('password: ')
 client = docserv.DocsService()
 client.ClientLogin(username, password)
@@ -79,11 +78,6 @@ def enter_columns(cols):
 def insert_row(row):
     spreadclient.InsertRow(row, set_spreadid, set_workid)
 
-def delete_row(command):
-    feed = spreadclient.GetListFeed(set_spreadid, set_workid)
-    row_to_del = int(command.split()[1]) - 1
-    spreadclient.DeleteRow(feed.entry[row_to_del])
-    
 def update_row(command):
     feed = spreadclient.GetListFeed(set_spreadid, set_workid)
     old_row = int(command.split()[1]) - 1
@@ -91,9 +85,11 @@ def update_row(command):
     new_row = enter_columns(cols)
     spreadclient.UpdateRow(feed.entry[old_row], new_row)
 
-def test():
-    import pdb; pdb.set_trace()
-
+def delete_row(command):
+    feed = spreadclient.GetListFeed(set_spreadid, set_workid)
+    row_to_del = int(command.split()[1]) - 1
+    spreadclient.DeleteRow(feed.entry[row_to_del])
+    
 command = ''
 while command != 'q':
     print '\nCommands:'
@@ -114,18 +110,18 @@ while command != 'q':
         print_spreadsheets_ids(processed_ids)
     elif command == 't':
         test()
+    elif 'set' in command:
+        set_spreadsheet(command)
     elif 'read' in command.split():
         sheet_read()
     elif 'insert' in command:
         cols = make_columns()
         row = enter_columns(cols)
         insert_row(row)
-    elif 'set' in command:
-        set_spreadsheet(command)
-    elif 'delete' in command:
-        delete_row(command)
     elif 'update' in command:
         update_row(command)
+    elif 'delete' in command:
+        delete_row(command)
     elif command == 'q':
         break
     else:
